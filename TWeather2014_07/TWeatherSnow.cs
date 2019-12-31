@@ -5,6 +5,7 @@ using SharpDX.Toolkit.Graphics;
 using SharpDX.Windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -78,6 +79,7 @@ namespace TWeather2014_07
             graphics = new GraphicsDeviceManager(this);
         }
 
+
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -97,22 +99,37 @@ namespace TWeather2014_07
             SetLayeredWindowAttributes(h, 0, 255, LWA_ALPHA);
             DwmExtendFrameIntoClientArea(h, ref marg);
             Content.RootDirectory ="assets";
+
+            List<Texture> textures = new List<Texture>();
+
+            foreach(string file in Directory.GetFiles("assets"))
+            {
+                textures.Add(Texture.Load(GraphicsDevice, file));
+            }
+
+            s = textures.ToArray();
+
+            
+
+            
+
             //Content.ServiceProvider
-            s = new Texture[]{
-                Content.Load<Texture>("snf0"),
-                Content.Load<Texture>("snf1"),
-                Content.Load<Texture>("snf2"),
-                Content.Load<Texture>("snf3"),
-                Content.Load<Texture>("snf4"),
-                Content.Load<Texture>("snf5")
-            };
+            //s = new Texture[]{
+            //    Content.Load<Texture>("snf0"),
+            //    Content.Load<Texture>("snf1"),
+            //    Content.Load<Texture>("snf2"),
+            //    Content.Load<Texture>("snf3"),
+            //    Content.Load<Texture>("snf4"),
+            //    Content.Load<Texture>("snf5")
+            //};
+            const float scaleFactor = 0.3f;
             o = new Vector2[]{
-                new Vector2(s[0].Width/2f,s[0].Height/2f),
-                new Vector2(s[1].Width/2f,s[0].Height/2f),
-                new Vector2(s[2].Width/2f,s[0].Height/2f),
-                new Vector2(s[3].Width/2f,s[0].Height/2f),
-                new Vector2(s[4].Width/2f,s[0].Height/2f),
-                new Vector2(s[5].Width/2f,s[0].Height/2f)
+                new Vector2(s[0].Width*scaleFactor,s[0].Height*scaleFactor),
+                new Vector2(s[1].Width*scaleFactor,s[0].Height*scaleFactor),
+                new Vector2(s[2].Width*scaleFactor,s[0].Height*scaleFactor),
+                new Vector2(s[3].Width*scaleFactor,s[0].Height*scaleFactor),
+                new Vector2(s[4].Width*scaleFactor,s[0].Height*scaleFactor),
+                new Vector2(s[5].Width*scaleFactor,s[0].Height*scaleFactor)
             };
             batch = new SpriteBatch(graphics.GraphicsDevice);
            // e = new Effect(graphics.GraphicsDevice,)
